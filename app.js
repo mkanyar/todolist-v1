@@ -24,18 +24,23 @@ app.get("/", function (req, res) {
 });
 
 app.post("/", function (req, res) {
-  item = req.body.newListItem;
-  items.push(item);
-  res.redirect("/");
+  let item = req.body.newListItem;
+  if (req.body.list === "Work List") {
+    workItems.push(item);
+    res.redirect("/work");
+  } else {
+    items.push(item);
+    res.redirect("/");
+  }
 });
 app.get("/work", function (req, res) {
   res.render("list", { listTitle: "Work List", newListItem: workItems });
 });
-app.post("/work", function (req, res) {
-  let item = req.body.newListItem;
-  workItems.push(item);
-  res.redirect("/work");
-});
+// app.post("/work", function (req, res) {
+//   let item = req.body.newListItem;
+//   workItems.push(item);
+//   res.redirect("/work");
+// });
 
 app.listen(3000, function () {
   console.log(" Server running on port 3000");
