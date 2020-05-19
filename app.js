@@ -2,11 +2,12 @@
 const express = require("express");
 const bodyParser = require("body-parser");
 const app = express();
-var items = [];
+var items = ["buy food", "cook food", "eat food"];
 
 //setting ejs
 app.set("view engine", "ejs");
 app.use(bodyParser.urlencoded({ extended: true }));
+app.use(express.static("public"));
 app.get("/", function (req, res) {
   var today = new Date();
   currentDay = today.getDay();
@@ -19,11 +20,11 @@ app.get("/", function (req, res) {
   var day = today.toLocaleDateString("en-US", options);
 
   //kindOfDay is the exact same attribute in list.ejs
-  res.render("list", { kindOfDay: day, newItem: items });
+  res.render("list", { kindOfDay: day, newListItem: items });
 });
 
 app.post("/", function (req, res) {
-  item = req.body.newItem;
+  item = req.body.newListItem;
   items.push(item);
   res.redirect("/");
 });
