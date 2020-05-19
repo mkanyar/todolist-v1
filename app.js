@@ -3,22 +3,22 @@ const express = require("express");
 const bodyParser = require("body-parser");
 const date = require(__dirname + "/date.js");
 const app = express();
-var items = ["buy food", "cook food", "eat food"];
-var workItems = [];
+const items = ["buy food", "cook food", "eat food"];
+const workItems = [];
 //setting ejs
 app.set("view engine", "ejs");
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(express.static("public"));
 
 app.get("/", function (req, res) {
-  let day = date.getDate();
+  const day = date.getDate();
 
   //kindOfDay is the exact same attribute in list.ejs
   res.render("list", { listTitle: day, newListItem: items });
 });
 
 app.post("/", function (req, res) {
-  let item = req.body.newListItem;
+  const item = req.body.newListItem;
   if (req.body.list === "Work List") {
     workItems.push(item);
     res.redirect("/work");
